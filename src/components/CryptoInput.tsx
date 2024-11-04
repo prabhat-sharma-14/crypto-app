@@ -14,7 +14,7 @@ const CryptoInput: React.FC<CryptoInputProps> = ({ onSelectCrypto }) => {
       try {
         const response = await fetch('http://localhost:8080/show-crypto-list');
         const data = await response.json();
-        setCurrencies(data.availableCryptos);  // Set available cryptos
+        setCurrencies(data.data);  // Set available cryptos
       } catch (error) {
         console.error('Error fetching available cryptos:', error);
       }
@@ -28,7 +28,8 @@ const CryptoInput: React.FC<CryptoInputProps> = ({ onSelectCrypto }) => {
     try {
       const response = await fetch(`http://localhost:8080/price/${currencyCode.toLowerCase()}`);
       const data = await response.json();
-      onSelectCrypto(data.code, data.rate_float);  // Use the fetched price
+      const currencyDetails = data.data;
+      onSelectCrypto(currencyDetails.code, currencyDetails.rate_float);  // Use the fetched price
     } catch (error) {
       console.error('Error fetching crypto price:', error);
     }

@@ -24,8 +24,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Cryptocurrency Price Tracker</h1>
+    <div className="app-root">
+      <h1 className="heading-primary">Cryptocurrency Price Tracker</h1>
       <CryptoInput onSelectCrypto={handleSelectCrypto} />
 
       {cryptoPrice && (
@@ -33,7 +33,7 @@ const App: React.FC = () => {
           <h2>
             {cryptoPrice.code}: ${cryptoPrice.price.toFixed(2)}
           </h2>
-          <button onClick={pinCrypto}>Pin this Currency</button>
+          <button className="btn" onClick={pinCrypto}>Pin this Currency</button>
         </div>
       )}
 
