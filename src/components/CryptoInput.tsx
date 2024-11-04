@@ -12,9 +12,10 @@ const CryptoInput: React.FC<CryptoInputProps> = ({ onSelectCrypto }) => {
   useEffect(() => {
     const fetchCryptos = async () => {
       try {
-        const response = await fetch('http://localhost:8080/show-crypto-list');
+        const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
         const data = await response.json();
-        setCurrencies(data.data);  // Set available cryptos
+        const currencyCodes = Object.keys(data.bpi)
+        setCurrencies(currencyCodes);  // Set available cryptos
       } catch (error) {
         console.error('Error fetching available cryptos:', error);
       }
@@ -26,9 +27,9 @@ const CryptoInput: React.FC<CryptoInputProps> = ({ onSelectCrypto }) => {
   // Fetch the selected crypto price from the API
   const fetchCryptoPrice = async (currencyCode: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/price/${currencyCode.toLowerCase()}`);
+      const response = await fetch(`https://api.coindesk.com/v1/bpi/currentprice.json`);
       const data = await response.json();
-      const currencyDetails = data.data;
+      const currencyDetails = data.bpi[currencyCode]
       onSelectCrypto(currencyDetails.code, currencyDetails.rate_float);  // Use the fetched price
     } catch (error) {
       console.error('Error fetching crypto price:', error);
